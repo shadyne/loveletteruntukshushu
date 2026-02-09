@@ -49,7 +49,7 @@ export default function Home() {
     }, 600);
   };
 
-  const createSparkle = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const createSparkle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const sparkle = document.createElement('div');
     sparkle.className = 'sparkle';
     sparkle.style.left = e.clientX + 'px';
