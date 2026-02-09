@@ -9,6 +9,11 @@ export default function Home() {
   const [letterProgress, setLetterProgress] = useState(0);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [hoveredHeart, setHoveredHeart] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: { clientX: any; clientY: any }) => {
@@ -43,7 +48,7 @@ export default function Home() {
     }, 600);
   };
 
-  const createSparkle = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const createSparkle = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const sparkle = document.createElement('div');
     sparkle.className = 'sparkle';
     sparkle.style.left = e.clientX + 'px';
@@ -262,7 +267,7 @@ export default function Home() {
         />
 
         {/* Floating Hearts Background - Only in envelope view */}
-        {!showLetter && (
+        {!showLetter && isMounted && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(20)].map((_, i) => (
               <div
@@ -341,6 +346,7 @@ export default function Home() {
                         >
                           <i
                             className={`fas fa-${hoveredHeart ? 'heart' : 'lock'}`}
+                            style={{ color: 'red' }}
                           ></i>
                         </button>
                       </div>
@@ -384,25 +390,37 @@ export default function Home() {
                   className="decorative-heart top-8 -left-8 sm:top-12 sm:-left-12 text-rose-300 text-5xl sm:text-7xl animate-float-side"
                   style={{ animationDelay: '0s' }}
                 >
-                  <i className="fas fa-heart"></i>
+                  <i
+                    className="fas fa-heart"
+                    style={{ color: 'red' }}
+                  ></i>
                 </div>
                 <div
                   className="decorative-heart top-1/3 -right-8 sm:-right-12 text-pink-300 text-4xl sm:text-6xl animate-float-side"
                   style={{ animationDelay: '1s' }}
                 >
-                  <i className="fas fa-heart"></i>
+                  <i
+                    className="fas fa-heart"
+                    style={{ color: 'red' }}
+                  ></i>
                 </div>
                 <div
                   className="decorative-heart bottom-1/4 -left-6 sm:-left-10 text-red-300 text-3xl sm:text-5xl animate-float-side"
                   style={{ animationDelay: '2s' }}
                 >
-                  <i className="fas fa-heart"></i>
+                  <i
+                    className="fas fa-heart"
+                    style={{ color: 'red' }}
+                  ></i>
                 </div>
                 <div
                   className="decorative-heart bottom-12 -right-8 sm:-right-12 text-rose-300 text-4xl sm:text-6xl animate-float-side"
                   style={{ animationDelay: '1.5s' }}
                 >
-                  <i className="fas fa-heart"></i>
+                  <i
+                    className="fas fa-heart"
+                    style={{ color: 'red' }}
+                  ></i>
                 </div>
 
                 {/* Content with proper padding */}
@@ -420,17 +438,21 @@ export default function Home() {
                   <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 text-rose-400 text-xl sm:text-2xl md:text-3xl hover:scale-125 transition-transform z-10">
                     ❦
                   </div>
+
                   {/* Header with Hearts */}
                   <div className="text-center mb-6 sm:mb-8 md:mb-10 animate-slideDown">
                     <div className="flex justify-center gap-2 sm:gap-3 mb-4 text-2xl sm:text-3xl md:text-4xl">
-                      <i className="fas fa-heart text-rose-500 animate-heartbeat cursor-pointer hover:scale-125 transition-transform"></i>
+                      <i
+                        className="fas fa-heart text-rose-500 animate-heartbeat cursor-pointer hover:scale-125 transition-transform"
+                        style={{ color: 'red' }}
+                      ></i>
                       <i
                         className="fas fa-heart text-pink-500 animate-heartbeat cursor-pointer hover:scale-125 transition-transform"
-                        style={{ animationDelay: '0.1s' }}
+                        style={{ animationDelay: '0.1s', color: 'red' }}
                       ></i>
                       <i
                         className="fas fa-heart text-red-500 animate-heartbeat cursor-pointer hover:scale-125 transition-transform"
-                        style={{ animationDelay: '0.2s' }}
+                        style={{ animationDelay: '0.2s', color: 'red' }}
                       ></i>
                     </div>
 
@@ -450,6 +472,7 @@ export default function Home() {
 
                     <div className="w-24 sm:w-32 md:w-40 h-1 bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
                   </div>
+
                   {/* Letter Body */}
                   <div
                     className="space-y-4 sm:space-y-5 md:space-y-6 animate-slideUp max-w-2xl mx-auto"
@@ -504,7 +527,7 @@ export default function Home() {
                         className="text-xl sm:text-2xl md:text-3xl font-bold text-rose-600 mb-3 text-shadow-glow hover:scale-105 transition-transform cursor-default"
                         style={{ fontFamily: "'Playfair Display', serif" }}
                       >
-                        I Love You Forever Chu Cayangggg ♥
+                        I Love You Forever Chu Cayangggg
                       </p>
                       <p
                         className="text-base sm:text-lg md:text-xl text-gray-700 italic hover:text-gray-800 transition-colors text-shadow-strong"
@@ -514,15 +537,18 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                  {/* Read Progress Indicator */}
 
+                  {/* Read Progress Indicator */}
+                  <br />
                   <div className="text-center mt-6 sm:mt-8 md:mt-10">
                     <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-600 bg-white/50 px-4 py-2 rounded-full">
-                      <i className="fas fa-book-open animate-pulse text-rose-500"></i>
                       <span className="font-medium">
-                        &nbsp; Dibaca dengan penuh cinta &nbsp;
+                        &nbsp;Dibaca dengan penuh cinta&nbsp;
                       </span>
-                      <i className="fas fa-heart text-rose-500 animate-heartbeat"></i>
+                      <i
+                        className="fas fa-heart text-rose-500 animate-heartbeat"
+                        style={{ color: 'red' }}
+                      ></i>
                     </div>
                   </div>
                 </div>
@@ -559,8 +585,8 @@ export default function Home() {
                   className="px-5 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base font-semibold"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 >
-                  <i className="fas fa-redo"></i>
-                  &nbsp; Baca Ulang
+                  <i className="fas fa-redo mr-2"></i>
+                  &nbsp;Baca Ulang
                 </button>
               </div>
             </div>
